@@ -1,4 +1,6 @@
-﻿namespace Dsw2026Ej11.Collections;
+﻿using Dsw2026Ej11.Domain;
+
+namespace Dsw2026Ej11.Collections;
 
 /*
  * Para cada punto crear un método que permita:
@@ -16,4 +18,74 @@
  */
 public class CasoLinq
 {
+    private readonly List<Libro> _libros;
+    
+    //Constructor de la lista libros
+    public CasoLinq()
+    {
+        _libros = Libro.CrearLista();
+    }
+    
+    //Obtener el primer libro
+    public Libro? GetPrimero()
+    {
+        return _libros.FirstOrDefault();
+    }
+    
+    //Obtener Ultimo Libro
+    public Libro? GetUltimo()
+    {
+        return _libros.LastOrDefault();
+    }
+    
+    //Obtner la suma de precios 
+    public decimal GetTotalPrecios()
+    {
+        return _libros.Sum(l => l.Precio);
+    }
+    
+    //Obtener el promedio de precios
+    public decimal GetPromedioPrecios()
+    {
+        return _libros.Average(l => l.Precio);
+    }
+    
+    //Obtener la lista de libros con Id mayor a 15
+    public List<Libro> GetListaById()
+    {
+        return _libros.Where(l => l.Id > 15).ToList();
+    }
+    
+    //Obtener una lista de cada libro con su título y precio en formato moneda 
+    public List<string> GetLibros()
+    {
+        return _libros.Select(l => $"{l.Titulo} - {l.Precio:C}").ToList();
+    }
+    
+    //Obtener el libro con el precio mas alto
+    public Libro? GetMayorPrecio()
+    {
+        return _libros.OrderByDescending(l => l.Precio).FirstOrDefault();
+    }
+    
+    //Obtener el libro con el precio mas bajo
+    public Libro? GetMenorPrecio()
+    {
+        return _libros.OrderBy(l => l.Precio).FirstOrDefault();
+    }
+    
+    //Obtener libros cuyo precio sea mayor al promedio
+    public List<Libro> GetMayorPromedio()
+    {
+        decimal promedio = GetPromedioPrecios();
+        return _libros.Where(l => l.Precio > promedio).ToList();
+    }
+    
+    //Obtener los libros ordenados por título de forma descendente
+    public List<Libro> GetLibrosOrdenadosPorTituloDescendente()
+    {
+        return _libros.OrderByDescending(l => l.Precio).ToList();
+    }
+    
+    
 }
